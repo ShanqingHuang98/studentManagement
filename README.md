@@ -1,5 +1,11 @@
 #学生管理系统设计概要
 
+## url/账号/密码
+```aidl
+url：jdbc:mysql://localhost:3306/studb 
+账号：root
+密码：123456
+```
 ## 功能设计
 
 ### 系统登录
