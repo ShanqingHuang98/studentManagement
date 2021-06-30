@@ -53,6 +53,18 @@
     </profiles>
     <dependencies>
 
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -82,6 +94,12 @@
                     </execution>
                 </executions>
                 <dependencies>
+                    <!-- https://mvnrepository.com/artifact/org.aeonbits.owner/owner -->
+                    <dependency>
+                        <groupId>org.aeonbits.owner</groupId>
+                        <artifactId>owner</artifactId>
+                        <version>1.0.4</version>
+                    </dependency>
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
@@ -92,6 +110,16 @@
                         <groupId>mysql</groupId>
                         <artifactId>mysql-connector-java</artifactId>
                         <version>8.0.25</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>commons-codec</groupId>
+                        <artifactId>commons-codec</artifactId>
+                        <version>1.2</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.github.javafaker</groupId>
+                        <artifactId>javafaker</artifactId>
+                        <version>1.0.2</version>
                     </dependency>
                 </dependencies>
             </plugin>
