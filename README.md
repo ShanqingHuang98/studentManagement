@@ -4,6 +4,7 @@
 url ```jdbc:mysql://localhost:3306/studb ```
 账号```root```
 密码```123456```
+
 ## 功能设计
 
 ### 系统登录
