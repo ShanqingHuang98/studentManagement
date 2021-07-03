@@ -1,7 +1,11 @@
 package com.hsq.jdbc;
 
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
-import java.util.ResourceBundle;
+import java.util.Properties;
+
 
 public class JDBCUtils {
     private static String driver;
@@ -10,18 +14,22 @@ public class JDBCUtils {
     private static String password;
 
     static {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("db");
+        InputStream inputStream = JDBCUtils.class.getClassLoader().getResourceAsStream("db.properties");
+        Properties properties = new Properties();
+
         try {
-            driver = resourceBundle.getString("driver");
-            url = resourceBundle.getString("url");
-            username = resourceBundle.getString("username");
-            password = resourceBundle.getString("password");
+            properties.load(inputStream);
+            driver = properties.getProperty("driver");
+            url = properties.getProperty("url");
+            username = properties.getProperty("username");
+            password = properties.getProperty("password");
+
 
             // load driver
             Class.forName(driver);
             // if success ,print it out
             System.out.println("success!");
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
     }
