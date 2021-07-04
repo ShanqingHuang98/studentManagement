@@ -43,8 +43,8 @@ public class ViewTest {
     // 测试删学生信息视图
     @Test
     public void deleteMenuViewTest() throws Exception {
-        User user = View.deleteMenuView();
-        System.out.println(user);
+        String uname = View.deleteMenuView();
+        System.out.println(uname);
     }
 
     // 测试改学生信息视图
@@ -57,7 +57,7 @@ public class ViewTest {
     // 测试查学生信息视图
     @Test
     public void selectMenuViewTest() throws Exception {
-        User user = View.selectMenuView();
-        System.out.println(user);
+        String uname = View.selectMenuView();
+        System.out.println(uname);
     }
 }
