@@ -155,6 +155,8 @@ public class View {
 
     /**
      * 输出学生信息
+     * @author concise
+     * @param user
      */
     public static void printUser(User user) {
         System.out.println("id: " + user.getId());
