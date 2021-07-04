@@ -38,13 +38,13 @@ public class View {
         System.out.println("**********************\t\t 3. 修改学生信息 \t\t***************************");
         System.out.println("**********************\t\t 4. 查询学生信息 \t\t***************************");
         String type = input.nextLine();
-        int ietm = Integer.parseInt(type);
-        if (ietm < 0 || ietm > 4) {
+        int item = Integer.parseInt(type);
+        if (item < 0 || item > 4) {
             System.out.println("输入有误！请重新输入");
             return managerMenuView();
         }
         System.out.println("******************************************************************");
-        return ietm;
+        return item;
     }
 
     // 教师
@@ -106,7 +106,7 @@ public class View {
      *
      * @return new User object
      */
-    public static User deleteMenuView() {
+    public static String deleteMenuView() {
         System.out.println("******************************************************************");
         System.out.println("**********************\t\t 请根据提示操作\t\t*************************");
         System.out.println("**********************\t\t 请输入需删除的账号\t\t***************************");
@@ -115,7 +115,7 @@ public class View {
         String upass = input.nextLine();
         System.out.println("******************************************************************");
 
-        return new User(uname, upass);
+        return uname;
     }
 
     /**
@@ -136,11 +136,11 @@ public class View {
     }
 
     /**
-     * 修改学生信息视图
+     * 查询学生信息视图
      *
      * @return new User object
      */
-    public static User selectMenuView() {
+    public static String selectMenuView() {
         System.out.println("******************************************************************");
         System.out.println("**********************\t\t 请根据提示操作\t\t*************************");
         System.out.println("**********************\t\t 请输入需查询的账号\t\t***************************");
@@ -149,6 +149,23 @@ public class View {
         String upass = input.nextLine();
         System.out.println("******************************************************************");
 
-        return new User(uname, upass);
+        return uname;
+    }
+
+
+    /**
+     * 输出学生信息
+     */
+    public static void printUser(User user) {
+        System.out.println("id: " + user.getId());
+        System.out.println("name: " + user.getUname());
+        System.out.println("password: " + user.getUpass());
+        if (user.getType() == 1) {
+            System.out.println("用户权限：管理员" + user.getType());
+        } else if (user.getType() == 2) {
+            System.out.println("用户权限：教师" + user.getType());
+        } else if (user.getType() == 3) {
+            System.out.println("用户权限：学生" + user.getType());
+        }
     }
 }

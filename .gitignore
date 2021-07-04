@@ -28,3 +28,5 @@ hs_err_pid
 *.iml
 *.yml
 target/
+.DS_Store
+.gitignore.swp

@@ -2,7 +2,6 @@ package com.hsq.bean;
 
 public class User {
     // 要求封装一个类
-    // 提供四个构造方法，可以去看看原来的作业
     //重写toString方法
     // 提供私有成员变量
     private int id;

@@ -91,11 +91,10 @@ public class Random {
 
     // 测试函数入口
     public static void main(String[] args) {
-//        for (int i = 0; i < 400; i++) {
-//            int num = 10;
-//         System.out.println(getRandomPwd(num));
-//        System.out.println("系统java.class.path：" + System.getProperties().getProperty("java.class.path"));
-        System.out.println("java.class.path:"+System.getProperties().getProperty("java.class.path"));
+        for (int i = 0; i < 400; i++) {
+            int num = 10;
+            System.out.println(getRandomPwd(num));
+        }
     }
 }
 
