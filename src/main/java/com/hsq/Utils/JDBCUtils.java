@@ -1,4 +1,4 @@
-package com.hsq.jdbc;
+package com.hsq.Utils;
 
 
 import java.io.IOException;

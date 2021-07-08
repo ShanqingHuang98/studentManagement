@@ -2,12 +2,14 @@ package com.hsq.view;
 
 import com.hsq.bean.User;
 
+import java.math.BigInteger;
+
 import java.util.Scanner;
 
 /**
  * @author concise
  */
-public class View {
+public class InformationAndAccountView {
 
     private static Scanner input = new Scanner(System.in);
 
@@ -29,10 +31,10 @@ public class View {
 
     // 管理员菜单
     public static int managerMenuView() {
-        System.out.println("******************************************************************");
-        System.out.println("*******************\t\t 欢迎管理员回家 \t\t**************************");
-        System.out.println("**********************\t\t 请根据提示操作 \t\t*************************");
-        System.out.println("**********************\t\t 0. 退出 \t\t***************************");
+        System.out.println("***********************************************************************");
+        System.out.println("************************\t\t 欢迎管理员回家 \t\t**************************");
+        System.out.println("*************************\t\t 请根据提示操作 \t\t*************************");
+        System.out.println("**************************\t\t 0. 退出 \t\t*****************************");
         System.out.println("**********************\t\t 1. 增加学生信息 \t\t***************************");
         System.out.println("**********************\t\t 2. 删除学生信息 \t\t***************************");
         System.out.println("**********************\t\t 3. 修改学生信息 \t\t***************************");
@@ -49,10 +51,10 @@ public class View {
 
     // 教师
     public static int teacherMenuView() {
-        System.out.println("******************************************************************");
-        System.out.println("*******************\t\t 欢迎老师回家 \t\t**************************");
-        System.out.println("**********************\t\t 请根据提示操作 \t\t*************************");
-        System.out.println("**********************\t\t 0. 退出 \t\t***************************");
+        System.out.println("***********************************************************************");
+        System.out.println("*************************\t\t 欢迎老师回家 \t\t**************************");
+        System.out.println("*************************\t\t 请根据提示操作 \t\t*************************");
+        System.out.println("**************************\t\t 0. 退出 \t\t*****************************");
         System.out.println("**********************\t\t 1. 增加学生信息 \t\t***************************");
         System.out.println("**********************\t\t 2. 修改学生信息 \t\t***************************");
         System.out.println("**********************\t\t 3. 查询学生信息 \t\t***************************");
@@ -67,10 +69,10 @@ public class View {
     }
 
     public static int studentMenuView() {
-        System.out.println("******************************************************************");
-        System.out.println("*******************\t\t 欢迎同学回家 \t\t**************************");
-        System.out.println("**********************\t\t 请根据提示操作 \t\t*************************");
-        System.out.println("**********************\t\t 0. 退出 \t\t***************************");
+        System.out.println("***********************************************************************");
+        System.out.println("*************************\t\t 欢迎同学回家 \t\t**************************");
+        System.out.println("*************************\t\t 请根据提示操作 \t\t*************************");
+        System.out.println("**************************\t\t 0. 退出 \t\t*****************************");
         System.out.println("**********************\t\t 1. 增加学生信息 \t\t***************************");
         System.out.println("**********************\t\t 2. 修改学生信息 \t\t***************************");
         System.out.println("**********************\t\t 3. 查询学生信息 \t\t***************************");
@@ -96,9 +98,22 @@ public class View {
         String uname = input.nextLine();
         System.out.println("**********************\t\t 请输入新添加的密码\t\t***************************");
         String upass = input.nextLine();
-        System.out.println("******************************************************************");
+        System.out.println("**********************\t\t 请输入新添加人员类型\t\t***************************");
+        int type = Integer.parseInt(input.nextLine());
+        System.out.println("**********************\t\t 请输入新添加人员的性别\t\t***************************");
+        String sex = input.nextLine();
+        System.out.println("**********************\t\t 请输入新添加人员的学号\t\t***************************");
+        BigInteger number = input.nextBigInteger();
+        System.out.println("**********************\t\t 请输入新添加人员的入学年份\t\t***************************");
+        BigInteger year = input.nextBigInteger();
+        String a = input.nextLine();
+        System.out.println("**********************\t\t 请输入新添加人员的学院\t\t***************************");
+        String academy = input.nextLine();
+        System.out.println("**********************\t\t 请输入新添加人员的专业\t\t***************************");
+        String major = input.nextLine();
+        System.out.println("*****************************************************************************");
+        return new User(uname, upass, type, sex, number, year, academy, major);
 
-        return new User(uname, upass);
     }
 
     /**
@@ -124,14 +139,13 @@ public class View {
      * @return new User object
      */
     public static User changeMenuView() {
-        System.out.println("******************************************************************");
+        System.out.println("******x************************************************************");
         System.out.println("**********************\t\t 请根据提示操作\t\t*************************");
         System.out.println("**********************\t\t 请输入需修改的账号\t\t***************************");
         String uname = input.nextLine();
-        System.out.println("**********************\t\t 修改账号需要确认密码\t\t***************************");
+        System.out.println("**********************\t\t 请输入新的密码\t\t***************************");
         String upass = input.nextLine();
         System.out.println("******************************************************************");
-
         return new User(uname, upass);
     }
 
@@ -155,8 +169,9 @@ public class View {
 
     /**
      * 输出学生信息
-     * @author concise
+     *
      * @param user
+     * @author concise
      */
     public static void printUser(User user) {
         System.out.println("id: " + user.getId());
