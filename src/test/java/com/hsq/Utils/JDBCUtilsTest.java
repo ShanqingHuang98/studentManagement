@@ -1,4 +1,4 @@
-package com.hsq.jdbc;
+package com.hsq.Utils;
 
 import com.hsq.Dao.UserDaoImp;
 import com.hsq.bean.User;
@@ -6,12 +6,24 @@ import org.junit.Test;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class JDBCUtilsTest {
 
     @Test
-    public void jdbcConnectionTest() throws Exception {
+    public  void jdbcConnectionTest() throws SQLException {
+//        JDBCUtils utils = new JDBCUtils();
+//        try {
+//            Connection conn = JDBCUtils.getConnection();
+//            if (conn != null) {
+//                System.out.println("get a connection!");
+//            }
+//            utils.close(conn, null, null);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
         // 静态方法可用类名调用
         Connection connection = JDBCUtils.getConnection();
         if (connection != null) {
@@ -24,7 +36,6 @@ public class JDBCUtilsTest {
             }
         }
     }
-
 
     @Test
     public void longinTest() throws Exception {

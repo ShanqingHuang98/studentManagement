@@ -1,7 +1,7 @@
 package com.hsq.Dao;
 
 import com.hsq.bean.User;
-import com.hsq.jdbc.JDBCUtils;
+import com.hsq.Utils.JDBCUtils;
 
 import java.sql.*;
 
@@ -9,36 +9,36 @@ import java.sql.*;
  * @author concise
  */
 public class UserDaoImp implements UserDao {
+
     private static final String LONGINSQL = "select type from ACCOUNT where NAME =? and PASSWORD =?";
+    // 插入语句需要更改，一部分在account表，一部分在infor表
     private static final String INSERTSQL =
             "insert into `ACCOUNT`(id, name, password,type ,created_at, updated_at)\n" +
-                    "values (id, ?, ?,2, now(), now())";
+                    "values (id, ?, ?,3, now(), now())";
     private static final String DELETESQL = "delete from ACCOUNT where NAME=?";
     private static final String UPDATESQL = "update ACCOUNT set PASSWORD=? where name=?";
     private static final String SELECTSQL = "select * from ACCOUNT where NAME=?";
+    private static final String VERIFYSQL = "select PASSWORD from ACCOUNT where NAME =?";
 
 
     @Override
     public int login(User user) {
         Connection conn = JDBCUtils.getConnection();
-        if (conn != null) {
-            PreparedStatement preparedStatement = null;
-            ResultSet resultSet = null;
-            try {
-
-                preparedStatement = conn.prepareStatement(LONGINSQL);
-                preparedStatement.setString(1, user.getUname());
-                preparedStatement.setString(2, user.getUpass());
-                resultSet = preparedStatement.executeQuery();
-                while (resultSet.next()) {
-                    int type = resultSet.getInt("type");
-                    return type;
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                JDBCUtils.close(conn, preparedStatement, resultSet);
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = conn.prepareStatement(LONGINSQL);
+            preparedStatement.setString(1, user.getUname());
+            preparedStatement.setString(2, user.getUpass());
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int type = resultSet.getInt("type");
+                return type;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtils.close(conn, preparedStatement, resultSet);
         }
         return -1;
     }
@@ -49,7 +49,6 @@ public class UserDaoImp implements UserDao {
         if (conn != null) {
             PreparedStatement preparedStatement = null;
             try {
-                assert conn != null;
                 preparedStatement = conn.prepareStatement(INSERTSQL);
                 preparedStatement.setString(1, user.getUname());
                 preparedStatement.setString(2, user.getUpass());
@@ -70,7 +69,6 @@ public class UserDaoImp implements UserDao {
         if (conn != null) {
             PreparedStatement preparedStatement = null;
             try {
-                assert conn != null;
                 preparedStatement = conn.prepareStatement(DELETESQL);
                 preparedStatement.setString(1, uname);
                 int line = preparedStatement.executeUpdate();
@@ -90,7 +88,6 @@ public class UserDaoImp implements UserDao {
         if (conn != null) {
             PreparedStatement preparedStatement = null;
             try {
-                assert conn != null;
                 preparedStatement = conn.prepareStatement(UPDATESQL);
                 preparedStatement.setString(1, user.getUpass());
                 preparedStatement.setString(2, user.getUname());

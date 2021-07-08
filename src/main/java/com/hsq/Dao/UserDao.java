@@ -3,6 +3,9 @@ package com.hsq.Dao;
 import com.hsq.bean.User;
 
 public interface UserDao {
+    // 我在这里可以写很多接口，目前只有对账户的增删改查，但是我需要一个对学生的
+    // 然后有些可以重写两次，比如select，可以写个join的；insert，需要一个注册的insert和一个添加成绩的insert；
+
     /**
      * 验证登陆的方法
      *
