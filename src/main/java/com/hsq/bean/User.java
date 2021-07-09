@@ -12,12 +12,12 @@ public class User {
     private String uname;
     private String upass;
     private int type;
+    private int klass;
     private String sex;
     private BigInteger number;
-    private BigInteger year;
+    private long year;
     private String academy;
     private String major;
-
 
 
     // 提供公有的getter 和setter
@@ -69,11 +69,11 @@ public class User {
         this.number = number;
     }
 
-    public BigInteger getYear() {
+    public long getYear() {
         return year;
     }
 
-    public void setYear(BigInteger year) {
+    public void setYear(long year) {
         this.year = year;
     }
 
@@ -91,6 +91,14 @@ public class User {
 
     public void setMajor(String major) {
         this.major = major;
+    }
+
+    public int getKlass() {
+        return klass;
+    }
+
+    public void setKlass(int klass) {
+        this.klass = klass;
     }
     // 提供四个公有的构造方法
 
@@ -116,7 +124,20 @@ public class User {
         this.type = type;
     }
 
-    public User(String uname, String upass, int type, String sex, BigInteger number, BigInteger year, String academy, String major) {
+
+    public User(String uname, String upass, int type, int klass, String sex, BigInteger number, long year, String academy, String major) {
+        this.uname = uname;
+        this.upass = upass;
+        this.type = type;
+        this.klass = klass;
+        this.sex = sex;
+        this.number = number;
+        this.year = year;
+        this.academy = academy;
+        this.major = major;
+    }
+
+    public User(String uname, String upass, int type, String sex, BigInteger number, long year, String academy, String major) {
         this.uname = uname;
         this.upass = upass;
         this.type = type;
@@ -126,19 +147,6 @@ public class User {
         this.academy = academy;
         this.major = major;
     }
-
-    public User(int id, String uname, String upass, int type, String sex, BigInteger number, BigInteger year, String academy, String major) {
-        this.id = id;
-        this.uname = uname;
-        this.upass = upass;
-        this.type = type;
-        this.sex = sex;
-        this.number = number;
-        this.year = year;
-        this.academy = academy;
-        this.major = major;
-    }
-
 
     @Override
     public String toString() {
@@ -154,4 +162,6 @@ public class User {
                 ", major='" + major + '\'' +
                 '}';
     }
+
+
 }

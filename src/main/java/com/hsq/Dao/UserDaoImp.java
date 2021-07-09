@@ -14,12 +14,13 @@ public class UserDaoImp implements UserDao {
     // 插入语句需要更改，一部分在account表，一部分在infor表
     private static final String INSERTSQL =
             "insert into `ACCOUNT`(id, name, password,type ,created_at, updated_at)\n" +
-                    "values (id, ?, ?,3, now(), now())";
+                    "values (id, ?,? ,3, now(), now())";
+    private static final String INSERSQL2 = "insert into INFORMATION(id, name, type, sex, number, major, class, academy, year, created_at, updated_at)\n" +
+            "    value (id, ?, 3, ?, null, ?, ?, ?, ?, now(), now())";
     private static final String DELETESQL = "delete from ACCOUNT where NAME=?";
     private static final String UPDATESQL = "update ACCOUNT set PASSWORD=? where name=?";
     private static final String SELECTSQL = "select * from ACCOUNT where NAME=?";
     private static final String VERIFYSQL = "select PASSWORD from ACCOUNT where NAME =?";
-
 
     @Override
     public int login(User user) {
@@ -48,12 +49,22 @@ public class UserDaoImp implements UserDao {
         Connection conn = JDBCUtils.getConnection();
         if (conn != null) {
             PreparedStatement preparedStatement = null;
+            PreparedStatement preparedStatement1 = null;
             try {
                 preparedStatement = conn.prepareStatement(INSERTSQL);
                 preparedStatement.setString(1, user.getUname());
                 preparedStatement.setString(2, user.getUpass());
-                int line = preparedStatement.executeUpdate();
-                return line > 0;
+                preparedStatement1 = conn.prepareStatement(INSERSQL2);
+                preparedStatement1.setString(1, user.getUname());
+                preparedStatement1.setString(2, user.getSex());
+                preparedStatement1.setString(3, user.getMajor());
+                preparedStatement1.setInt(4, user.getKlass());
+                preparedStatement1.setString(5, user.getAcademy());
+                preparedStatement1.setLong(6, user.getYear());
+                int info = preparedStatement1.executeUpdate();
+                int account = preparedStatement.executeUpdate();
+                return info > 0 && account > 0;
+
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             } finally {
