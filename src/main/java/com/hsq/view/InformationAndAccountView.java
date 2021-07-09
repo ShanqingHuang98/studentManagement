@@ -105,7 +105,7 @@ public class InformationAndAccountView {
         System.out.println("**********************\t\t 请输入新添加人员的学号\t\t***************************");
         BigInteger number = input.nextBigInteger();
         System.out.println("**********************\t\t 请输入新添加人员的入学年份\t\t***************************");
-        BigInteger year = input.nextBigInteger();
+        Long year = input.nextLong();
         String a = input.nextLine();
         System.out.println("**********************\t\t 请输入新添加人员的学院\t\t***************************");
         String academy = input.nextLine();
