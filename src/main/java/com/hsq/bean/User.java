@@ -117,11 +117,11 @@ public class User {
         this.type = type;
     }
 
-    public User(int id, String uname, String upass, int type) {
+    public User(int id, String uname, int type, BigInteger number) {
         this.id = id;
         this.uname = uname;
-        this.upass = upass;
         this.type = type;
+        this.number = number;
     }
 
 
@@ -141,6 +141,18 @@ public class User {
         this.uname = uname;
         this.upass = upass;
         this.type = type;
+        this.sex = sex;
+        this.number = number;
+        this.year = year;
+        this.academy = academy;
+        this.major = major;
+    }
+
+    public User(int id, String uname, String sex, int type, BigInteger number, String major, String academy, int klass, int year) {
+        this.id = id;
+        this.uname = uname;
+        this.type = type;
+        this.klass = klass;
         this.sex = sex;
         this.number = number;
         this.year = year;

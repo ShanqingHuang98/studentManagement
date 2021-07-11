@@ -1,7 +1,7 @@
-package com.hsq.Utils;
+package com.hsq.jdbc;
 
 import com.hsq.bean.User;
-import com.hsq.view.InformationAndAccountView;
+import com.hsq.client.view.InformationAndAccountView;
 import org.junit.Test;
 
 public class InformationAndAccountViewTest {
@@ -43,7 +43,7 @@ public class InformationAndAccountViewTest {
     // 测试删学生信息视图
     @Test
     public void deleteMenuViewTest() throws Exception {
-        String uname = InformationAndAccountView.deleteMenuView();
+        User uname = InformationAndAccountView.deleteMenuView();
         System.out.println(uname);
     }
 
@@ -57,7 +57,7 @@ public class InformationAndAccountViewTest {
     // 测试查学生信息视图
     @Test
     public void selectMenuViewTest() throws Exception {
-        String uname = InformationAndAccountView.selectMenuView();
+        User uname = InformationAndAccountView.selectMenuView();
         System.out.println(uname);
     }
 }
