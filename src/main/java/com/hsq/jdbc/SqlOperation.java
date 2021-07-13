@@ -2,7 +2,6 @@ package com.hsq.jdbc;
 
 import com.hsq.bean.User;
 
-import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -78,33 +77,35 @@ public class SqlOperation {
     }
 
     public static User selectInfo(User user) throws Exception {
-        String SELECTACCSQL = "select * from INFORMATION where deleted=0 and NAME=?";
+        String SELECTACCSQL = "select ID, NAME, SEX, type, MAJOR, ACADEMY, ClassID, YEAR from INFORMATION where NAME =?";
         if (conn != null) {
             PreparedStatement preparedStatement1;
             preparedStatement1 = conn.prepareStatement(SELECTACCSQL);
+            // 绑定参数的问题
             preparedStatement1.setString(1, user.getUname());
+            System.out.println(user.getUname());
             ResultSet result = preparedStatement1.executeQuery();
             while (result.next()) {
                 int id = result.getInt("ID");
                 String uname = result.getString("NAME");
                 String sex = result.getString("SEX");
                 int type = result.getInt("type");
-                BigInteger number = (BigInteger) result.getObject("NUMBER");
                 String major = result.getString("MAJOR");
                 String academy = result.getString("ACADEMY");
-                int klass = result.getInt("CLASS");
+                int klass = result.getInt("CLASSID");
                 int year = result.getInt("YEAR");
-                return new User(id, uname, sex, type, number, major, academy, klass, year);
+                User user2 = new User(id, uname, sex, type, major, academy, klass, year);
+                return user2;
             }
         }
-        return user;
+        return null;
     }
 
     /**
      * Account
      */
 
-    public static void insertToAccount(User user) throws Exception {
+    public static boolean insertToAccount(User user) throws Exception {
         String INSERTACCSQL =
                 "insert into `ACCOUNT`(id, name, password,type ,created_at, updated_at)\n" +
                         "values (id, ?,? ,3, now(), now())";
@@ -113,8 +114,9 @@ public class SqlOperation {
             preparedStatement.setString(1, user.getUname());
             preparedStatement.setString(2, user.getUpass());
             int info = preparedStatement.executeUpdate();
-            System.out.println(info);
+            return info > 0;
         }
+        return false;
     }
 
     public static boolean invisAcc(User user) throws Exception {
@@ -137,30 +139,29 @@ public class SqlOperation {
             preparedStatement1 = conn.prepareStatement(UPDATEPassSQL);
             preparedStatement1.setString(1, user.getUpass());
             preparedStatement1.setString(2, user.getUname());
-
             int info = preparedStatement1.executeUpdate();
             return info > 0;
         }
         return false;
     }
 
-    public static User selectAcc(User user) throws Exception {
-        String SELECTACCSQL = "select (ID,NAME,NUMBER,TYPE) from ACCOUNT where NAME = ?";
-        if (conn != null) {
-            PreparedStatement preparedStatement1;
-            preparedStatement1 = conn.prepareStatement(SELECTACCSQL);
-            preparedStatement1.setString(1, user.getUname());
-            ResultSet result = preparedStatement1.executeQuery();
-            while (result.next()) {
-                int id = result.getInt("ID");
-                String uname = result.getString("NAME");
-                int type = result.getInt("type");
-                BigInteger number = (BigInteger) result.getObject("NUMBER");
-                return new User(id, uname, type, number);
-            }
-        }
-        return null;
-    }
+//    public static User selectAcc(User user) throws Exception {
+//        String SELECTACCSQL = "select ID,NAME,NUMBER,TYPE from ACCOUNT where NAME = ?";
+//        if (conn != null) {
+//            PreparedStatement preparedStatement1;
+//            preparedStatement1 = conn.prepareStatement(SELECTACCSQL);
+//            preparedStatement1.setString(1, user.getUname());
+//            ResultSet result = preparedStatement1.executeQuery();
+//            while (result.next()) {
+//                int id = result.getInt("ID");
+//                String uname = result.getString("NAME");
+//                String number = result.getString("NUMBER");
+//                int type = result.getInt("type");
+//                return new User(id, uname, type);
+//            }
+//        }
+//        return null;
+//    }
 
 
     /**

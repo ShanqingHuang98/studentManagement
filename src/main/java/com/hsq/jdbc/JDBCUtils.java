@@ -26,8 +26,6 @@ public class JDBCUtils {
 
 
             Class.forName(driver);
-            // if success ,print it out
-            System.out.println("success!");
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }

@@ -1,4 +1,4 @@
-package com.hsq.client.view;
+package com.hsq.client;
 
 import com.hsq.bean.User;
 
@@ -25,8 +25,9 @@ public class InformationAndAccountView {
         System.out.println("******************************************************************");
         System.out.println("******************************************************************");
 
-        return new User(uname, upass);
-
+        User user = new User(uname, upass);
+        System.out.println(user);
+        return user;
     }
 
     // 管理员菜单
@@ -161,7 +162,6 @@ public class InformationAndAccountView {
         System.out.println("**********************\t\t 查询账号需要确认密码\t\t***************************");
         String upass = input.nextLine();
         System.out.println("******************************************************************");
-
         return new User(uname, upass);
     }
 

@@ -1,12 +1,12 @@
 package com.hsq.controller;
 
 import com.hsq.bean.User;
-import com.hsq.client.view.InformationAndAccountView;
-import com.hsq.dao.UserDaoImp;
+import com.hsq.client.InformationAndAccountView;
+import com.hsq.dao.user.StuDaoImp;
 
 public class StuServer {
     static void studentServer() {
-        UserDaoImp userDaoImp = new UserDaoImp();
+        StuDaoImp stuDaoImp = new StuDaoImp();
         int studentMenuView = InformationAndAccountView.studentMenuView();
         boolean flag;
         switch (studentMenuView) {
@@ -15,17 +15,17 @@ public class StuServer {
                 break;
             case 1:
                 User user = InformationAndAccountView.addMenuView();
-                flag = userDaoImp.insert(user);
+                flag = stuDaoImp.insert(user);
                 System.out.println(flag ? "添加成功" : "添加失败");
                 break;
             case 2:
                 User updateUser = InformationAndAccountView.changeMenuView();
-                flag = userDaoImp.update(updateUser);
+                flag = stuDaoImp.update(updateUser);
                 System.out.println(flag ? "修改成功" : "修改失败");
                 break;
             case 3:
                 User selectUname = InformationAndAccountView.selectMenuView();
-                User selectedUser = userDaoImp.select(selectUname);
+                User selectedUser = stuDaoImp.select(selectUname);
                 InformationAndAccountView.printUser(selectedUser);
                 break;
             default:

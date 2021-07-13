@@ -1,4 +1,4 @@
-package com.hsq.dao;
+package com.hsq.dao.user;
 
 import com.hsq.bean.User;
 

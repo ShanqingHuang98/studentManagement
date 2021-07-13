@@ -1,8 +1,9 @@
 package com.hsq.controller;
 
 import com.hsq.bean.User;
-import com.hsq.client.view.InformationAndAccountView;
+import com.hsq.client.InformationAndAccountView;
 import com.hsq.dao.login.LoginDaoImp;
+
 
 public class Index {
     static void index() {

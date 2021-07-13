@@ -1,7 +1,7 @@
 package com.hsq.jdbc;
 
 import com.hsq.bean.User;
-import com.hsq.client.view.InformationAndAccountView;
+import com.hsq.client.InformationAndAccountView;
 import org.junit.Test;
 
 public class InformationAndAccountViewTest {

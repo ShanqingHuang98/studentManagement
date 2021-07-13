@@ -1,7 +1,6 @@
-package com.hsq.dao;
+package com.hsq.dao.user;
 
 import com.hsq.bean.User;
-
 import com.hsq.dao.login.LonginDao;
 import com.hsq.jdbc.JDBCUtils;
 import com.hsq.jdbc.SqlOperation;
@@ -11,21 +10,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class TeacherDao implements UserDao , LonginDao {
+public class ManagerDaoImp implements UserDao, LonginDao {
     private static final Connection conn = JDBCUtils.getConnection();
     private static final PreparedStatement preparedStatement = null;
     private static final ResultSet resultSet = null;
 
     @Override
     public int login(User user) {
-        try {
-            conn.setAutoCommit(false);
-            SqlOperation.loginModele(user);
-            conn.commit();
-        } catch (Exception throwables) {
-            throwables.printStackTrace();
-        }
-        return -1;
+        return 0;
     }
 
     @Override
@@ -37,6 +29,7 @@ public class TeacherDao implements UserDao , LonginDao {
             SqlOperation.insertToGrade(user);
             SqlOperation.addToTableLog(user);
             conn.commit();
+            return true;
         } catch (Exception throwables) {
             throwables.printStackTrace();
             try {
@@ -58,9 +51,12 @@ public class TeacherDao implements UserDao , LonginDao {
         if (conn != null) {
             try {
                 conn.setAutoCommit(false);
+                SqlOperation.invisInfo(user);
+                SqlOperation.invisAcc(user);
                 SqlOperation.invisGrade(user);
                 SqlOperation.addToTableLog(user);
                 conn.commit();
+                return true;
             } catch (Exception throwables) {
                 throwables.printStackTrace();
             }
@@ -76,6 +72,7 @@ public class TeacherDao implements UserDao , LonginDao {
         return false;
     }
 
+
     @Override
     public boolean update(User user) {
         if (conn != null) {
@@ -85,6 +82,7 @@ public class TeacherDao implements UserDao , LonginDao {
                 SqlOperation.updateGrade(user);
                 SqlOperation.addToTableLog(user);
                 conn.commit();
+                return true;
             } catch (Exception throwables) {
                 throwables.printStackTrace();
             }
@@ -106,19 +104,16 @@ public class TeacherDao implements UserDao , LonginDao {
         if (conn != null) {
             try {
                 conn.setAutoCommit(false);
-                SqlOperation.selectAcc(user);
-                SqlOperation.selectInfo(user);
+                User userFromInfo = SqlOperation.selectInfo(user);
                 SqlOperation.selectGrade(user);
                 SqlOperation.addToTableLog(user);
                 conn.commit();
+                return userFromInfo;
             } catch (Exception throwables) {
                 throwables.printStackTrace();
             }
             try {
-                conn.rollback();
                 System.out.println("事务回滚");
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
             } finally {
                 JDBCUtils.close(conn, preparedStatement, resultSet);
             }
