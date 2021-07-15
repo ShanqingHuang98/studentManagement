@@ -9,6 +9,7 @@ import java.math.BigInteger;
  */
 public class User {
     private int id;
+
     private String uname;
     private String upass;
     private int type;
@@ -18,6 +19,20 @@ public class User {
     private long year;
     private String academy;
     private String major;
+
+    public User(String uname) {
+        this.uname = uname;
+    }
+
+    public User(int id, String uname, int type) {
+        this.id = id;
+        this.uname = uname;
+        this.type = type;
+    }
+
+    public User() {
+
+    }
 
 
     // 提供公有的getter 和setter
@@ -117,13 +132,23 @@ public class User {
         this.type = type;
     }
 
-    public User(int id, String uname, String upass, int type) {
+    public User(int id, String uname, int type, BigInteger number) {
         this.id = id;
         this.uname = uname;
-        this.upass = upass;
         this.type = type;
+        this.number = number;
     }
 
+    public User(int id, String uname, String sex, int type, String major, String academy, int klass, int year) {
+        this.id = id;
+        this.uname = uname;
+        this.type = type;
+        this.klass = klass;
+        this.sex = sex;
+        this.year = year;
+        this.academy = academy;
+        this.major = major;
+    }
 
     public User(String uname, String upass, int type, int klass, String sex, BigInteger number, long year, String academy, String major) {
         this.uname = uname;
@@ -137,7 +162,28 @@ public class User {
         this.major = major;
     }
 
-    public User(String uname, String upass, int type, String sex, BigInteger number, long year, String academy, String major) {
+    public User(String uname, String upass, int type, String sex, long year, String academy, String major) {
+        this.uname = uname;
+        this.upass = upass;
+        this.type = type;
+        this.year = year;
+        this.academy = academy;
+        this.major = major;
+    }
+
+    public User(int id, String uname, String sex, int type, BigInteger number, String major, String academy, int klass, int year) {
+        this.id = id;
+        this.uname = uname;
+        this.type = type;
+        this.klass = klass;
+        this.sex = sex;
+        this.number = number;
+        this.year = year;
+        this.academy = academy;
+        this.major = major;
+    }
+
+    public User(String uname, String upass, int type, String sex, BigInteger number, Long year, String academy, String major) {
         this.uname = uname;
         this.upass = upass;
         this.type = type;

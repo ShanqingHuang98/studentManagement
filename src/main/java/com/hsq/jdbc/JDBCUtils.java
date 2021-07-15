@@ -1,4 +1,4 @@
-package com.hsq.Utils;
+package com.hsq.jdbc;
 
 
 import java.io.IOException;
@@ -25,10 +25,7 @@ public class JDBCUtils {
             password = properties.getProperty("password");
 
 
-            // load driver
             Class.forName(driver);
-            // if success ,print it out
-            System.out.println("success!");
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }

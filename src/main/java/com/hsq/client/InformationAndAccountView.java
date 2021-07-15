@@ -1,4 +1,4 @@
-package com.hsq.view;
+package com.hsq.client;
 
 import com.hsq.bean.User;
 
@@ -25,8 +25,9 @@ public class InformationAndAccountView {
         System.out.println("******************************************************************");
         System.out.println("******************************************************************");
 
-        return new User(uname, upass);
-
+        User user = new User(uname, upass);
+        System.out.println(user);
+        return user;
     }
 
     // 管理员菜单
@@ -121,7 +122,7 @@ public class InformationAndAccountView {
      *
      * @return new User object
      */
-    public static String deleteMenuView() {
+    public static User deleteMenuView() {
         System.out.println("******************************************************************");
         System.out.println("**********************\t\t 请根据提示操作\t\t*************************");
         System.out.println("**********************\t\t 请输入需删除的账号\t\t***************************");
@@ -129,8 +130,7 @@ public class InformationAndAccountView {
         System.out.println("**********************\t\t 删除账号需要确认密码\t\t***************************");
         String upass = input.nextLine();
         System.out.println("******************************************************************");
-
-        return uname;
+        return new User(uname, upass);
     }
 
     /**
@@ -154,7 +154,7 @@ public class InformationAndAccountView {
      *
      * @return new User object
      */
-    public static String selectMenuView() {
+    public static User selectMenuView() {
         System.out.println("******************************************************************");
         System.out.println("**********************\t\t 请根据提示操作\t\t*************************");
         System.out.println("**********************\t\t 请输入需查询的账号\t\t***************************");
@@ -162,8 +162,7 @@ public class InformationAndAccountView {
         System.out.println("**********************\t\t 查询账号需要确认密码\t\t***************************");
         String upass = input.nextLine();
         System.out.println("******************************************************************");
-
-        return uname;
+        return new User(uname, upass);
     }
 
 
