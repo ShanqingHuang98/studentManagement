@@ -1,6 +1,9 @@
 package com.hsq.server;
 
 
+import com.hsq.bean.User;
+import com.hsq.jdbc.SqlOperation;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -17,18 +20,26 @@ public class NioServer implements Runnable {
     private Selector selector;
     private volatile boolean stop = false;
 
-    /**
-     * 初始化多路复用器 绑定监听端口
-     *
-     * @param port
-     */
+    public static void main(String[] args) throws IOException {
+        int port = 8080;
+        NioServer nioServer = new NioServer(port);
+        new Thread(nioServer, "nioserver-001").start();
+    }
+
+
     public NioServer(int port) {
+
         try {
-            serverSocketChannel = ServerSocketChannel.open();//获得一个serverChannel
-            selector = Selector.open();////创建选择器  获得一个多路复用器
-            serverSocketChannel.configureBlocking(false);//设置为非阻塞模式 如果为 true，则此通道将被置于阻塞模式；如果为 false，则此通道将被置于非阻塞模式
-            serverSocketChannel.socket().bind(new InetSocketAddress(port), 1024);//绑定一个端口和等待队列长度
-            serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);//把selector注册到channel，关注链接事件
+            serverSocketChannel = ServerSocketChannel.open();
+            //获得一个serverChannel
+            selector = Selector.open();
+            ////创建选择器  获得一个多路复用器
+            serverSocketChannel.configureBlocking(false);
+            //设置为非阻塞模式 如果为 true，则此通道将被置于阻塞模式；如果为 false，则此通道将被置于非阻塞模式
+            serverSocketChannel.socket().bind(new InetSocketAddress(port), 1024);
+            //绑定一个端口和等待队列长度
+            serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+            //把selector注册到channel，关注链接事件
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
@@ -38,6 +49,7 @@ public class NioServer implements Runnable {
     public void stop() {
         this.stop = true;
     }
+
 
     @Override
     public void run() {
@@ -102,8 +114,9 @@ public class NioServer implements Runnable {
             //读事件
             if (key.isReadable()) {
                 SocketChannel socketChannel = (SocketChannel) key.channel();
-                ByteBuffer readbuffer = ByteBuffer.allocate(1024);//写 0 1024  1024
-//                ByteBuffer readbuffer = ByteBuffer.allocateDirect(1024); //申请直接内存，也就是堆外内存
+//                ByteBuffer readbuffer = ByteBuffer.allocate(1024);//写 0 1024  1024
+                // 申请直接内存，也就是堆外内存
+                ByteBuffer readbuffer = ByteBuffer.allocateDirect(1024);
                 // 读取请求码流，返回读取到的字节数
                 int readBytes = socketChannel.read(readbuffer);
                 // 读取到字节，对字节进行编解码
@@ -113,15 +126,28 @@ public class NioServer implements Runnable {
                     // 将缓冲区可读字节数组复制到新建的数组中
                     byte[] bytes = new byte[readbuffer.remaining()];
                     readbuffer.get(bytes);
-                    String body = new String(bytes, "UTF-8");
-                    System.out.println("input is:" + body);
-                    // 如何才能拿到body里面的name呢？？？
-
-                    // 去数据库查找，并的到返回的数据
-
-                    // 把返回的数据转化为String?要不还是用json字符串吧。。。
-                    res(socketChannel, body);
-                    // 把回复写回去
+                    String body = new String(bytes);
+//                    String body = "登录成功";
+//                    res(socketChannel, body);
+                    // 这下服务器回复的也是字符串了,且按/分割
+                    String[] arr = body.split("/");
+                    String name = arr[0];
+                    String password = arr[1];
+                    //调用查询方法
+                    User user = new User(name, password);
+                    try {
+                        int type = SqlOperation.loginModele(user);
+                        String response;
+                        if (type >= 1 && type <= 3) {
+                            response = "登录成功";
+                        } else {
+                            response = "登录失败";
+                        }
+                        System.out.println(response);
+                        res(socketChannel, response);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } else if (readBytes < 0) {
                     // 链路已经关闭 释放资源
                     key.cancel();
@@ -145,15 +171,6 @@ public class NioServer implements Runnable {
         }
     }
 
-    public static void server() {
-        int port = 8080;
-        NioServer nioServer = new NioServer(port);
-        new Thread(nioServer, "nioserver-001").start();
-    }
+
 }
-
-
-
-
-
 

@@ -14,6 +14,7 @@ import java.net.Socket;
  */
 public class Client2 {
     //https://www.cnblogs.com/jing99/p/12000371.html
+
     public static void client2() throws IOException {
         Socket socket = new Socket("localhost", 8080);
         System.out.println("客户端2启动");

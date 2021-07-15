@@ -1,53 +1,57 @@
 package com.hsq.client;
 
 
-import com.alibaba.fastjson.JSON;
-import com.hsq.bean.User;
-import com.mysql.cj.xdevapi.JsonArray;
-import com.mysql.cj.xdevapi.JsonString;
-
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.nio.ByteBuffer;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+import java.nio.charset.StandardCharsets;
 
-
-/**
- * @author concise
- */
 public class Client {
+    //https://www.cnblogs.com/jing99/p/12000371.html
+//    public static void client() throws IOException {
+    public static void main(String[] args) throws IOException {
+        SocketChannel channel = SocketChannel.open();
+        InetSocketAddress socketAddress = new InetSocketAddress("localhost", 8080);
+        boolean connect = channel.connect(socketAddress);
+        if (connect) {
+            System.out.println("客户端2启动");
+        }
 
-
-    public static void client() throws IOException {
-        // 创建两个socket，想让它们先后与server连接
-        Socket socket = new Socket("localhost", 8080);
-        System.out.println("客户端启动");
-        PrintStream out;
-        BufferedReader in;
-
-        // in和out好像都是socket的ip和端口
-        out = new PrintStream(socket.getOutputStream());
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        User user = new User();
-        user.setUname("黄山青");
-        user.setUpass("1998huang");
-        String jsonUser = JSON.toJSONString(user);
+        String uname = "老王";
+        String upass = "1";
 
         while (true) {
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 5; i++) {
                 Thread thread = new Thread();
                 thread.start();
-                System.out.println("第" + i + "个线程");
-                out.println(jsonUser);
-                System.out.println("客户端发送：" + user);
-                String reply = in.readLine();
-                System.out.println("服务器回复 :" + reply);
+//                System.out.println("第" + i + "个客户端2的线程");
+                String post = uname + "/" + upass;
+                byte[] bytes1 = post.getBytes(StandardCharsets.UTF_8);
+                if (bytes1 != null && bytes1.length > 0) {
+                    ByteBuffer writeBuffer = ByteBuffer.allocate(bytes1.length);
+                    writeBuffer.put(bytes1);
+                    writeBuffer.flip();
+                    channel.write(writeBuffer);
+                }
+
+                ByteBuffer readbuffer = ByteBuffer.allocate(1024);
+                int readbytes = channel.read(readbuffer);
+                if (readbytes > 0) {
+                    readbuffer.flip();
+                    byte[] bytes = new byte[readbuffer.remaining()];
+                    readbuffer.get(bytes);
+                    String reply = new String(bytes);
+                    System.out.println("服务器回复 :" + reply);
+                }
             }
-
-
         }
 //        socket.close();
-    }
 
+
+    }
 }
